@@ -1,0 +1,135 @@
+generator client {
+
+  provider = "prisma-client-js"
+
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+
+  numClient Int @id @default(autoincrement())
+
+  nomClient String
+
+  prenomClient String
+
+  email String @unique
+
+
+
+  reservations Reservation[]
+
+}
+
+
+
+model Service {
+
+  numService Int @id @default(autoincrement())
+
+  nomService String
+
+  description String
+
+
+
+  tarifs Tarif[]
+
+  experts ExpertService[]
+
+}
+
+
+
+model Tarif {
+
+  numTarif Int @id @default(autoincrement())
+
+  nomTarif String
+
+  typeTarif String
+
+  prixTarif Float
+
+  dureeTarif Int
+
+
+
+  numService Int
+
+
+
+  service Service @relation(fields: [numService], references: [numService])
+
+
+
+  reservations Reservation[]
+
+}
+
+
+
+model Reservation {
+
+  numReservation Int @id @default(autoincrement())
+
+  dateReservation DateTime
+
+  statutReservation String
+
+
+
+  numClient Int
+
+  numTarif Int
+
+
+
+  client Client @relation(fields: [numClient], references: [numClient])
+
+  tarif Tarif @relation(fields: [numTarif], references: [numTarif])
+
+}
+
+
+
+model Expert {
+
+  numExpert Int @id @default(autoincrement())
+
+  nomExpert String
+
+  emailExpert String @unique
+
+  telephoneExpert String
+
+
+
+  services ExpertService[]
+
+}
+
+
+
+model ExpertService {
+
+  numExpert Int
+
+  numService Int
+
+
+
+  expert Expert @relation(fields: [numExpert], references: [numExpert])
+
+  service Service @relation(fields: [numService], references: [numService])
+
+
+
+  @@id([numExpert, numService])
+
+}
