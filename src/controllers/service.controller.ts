@@ -7,50 +7,10 @@ import type {
 import { prisma }
     from "../lib/prisma.js";
 
-
-
-export async function getServices(
-
-    _req:Request,
-
-    res:Response
-
-){
-
-    const services =
-        await prisma.service.findMany();
-
-    res.json(services);
-
+import {
+    createServiceSchema
 }
-
-
-
-export async function createService(
-
-    req:Request,
-
-    res:Response
-
-){
-
-    const service =
-        await prisma.service.create({
-
-            data:{
-
-                nomService:req.body.nomService,
-
-                description:req.body.description
-
-            }
-
-        });
-
-    res.json(service);
-
-}
-
+    from "../schemas/service.schema.js";
 
 
 export async function updateService(
@@ -131,5 +91,69 @@ export async function deleteService(
         message:"Service supprimé"
 
     });
+
+}
+export async function createService(
+
+    req:Request,
+
+    res:Response
+
+){
+
+    createServiceSchema.parse(req.body);
+
+    const service =
+
+        await prisma.service.create({
+
+            data:{
+
+                nomService:req.body.nomService,
+
+                description:req.body.description
+
+            }
+
+        });
+
+    res.json(service);
+
+}
+export async function getServices(
+
+    _req:Request,
+
+    res:Response
+
+){
+
+    try{
+
+        const services =
+
+            await prisma.service.findMany({
+
+                include:{
+                    tarifs:true
+                }
+
+            });
+
+        res.json(services);
+
+    }
+
+    catch(error:any){
+
+        res.status(400).json({
+
+            error:"Erreur",
+
+            details:error.errors
+
+        });
+
+    }
 
 }
