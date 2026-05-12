@@ -19,6 +19,18 @@ import Home
 import Services
     from "./pages/Services";
 
+import Experts
+    from "./pages/Experts";
+
+import Tarifs
+    from "./pages/Tarifs";
+
+import Clients
+    from "./pages/Clients";
+
+import Reservations
+    from "./pages/Reservations";
+
 
 
 function App(){
@@ -48,6 +60,46 @@ function App(){
                     path="/services"
 
                     element={<Services />}
+
+                />
+
+
+
+                <Route
+
+                    path="/experts"
+
+                    element={<Experts />}
+
+                />
+
+
+
+                <Route
+
+                    path="/tarifs"
+
+                    element={<Tarifs />}
+
+                />
+
+
+
+                <Route
+
+                    path="/clients"
+
+                    element={<Clients />}
+
+                />
+
+
+
+                <Route
+
+                    path="/reservations"
+
+                    element={<Reservations />}
 
                 />
 

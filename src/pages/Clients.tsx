@@ -7,53 +7,53 @@ import {
 }
     from "react";
 
-import "./css/Services.css";
 
 
+interface Client{
 
-interface Service{
+    numClient:number;
 
-    numService:number;
+    nomClient:string;
 
-    nomService:string;
+    prenomClient:string;
 
-    description:string;
+    email:string;
 
 }
 
 
 
-export default function Services(){
+export default function Clients(){
 
     const [
 
-        services,
+        clients,
 
-        setServices
+        setClients
 
-    ] = useState<Service[]>([]);
+    ] = useState<Client[]>([]);
 
 
 
     useEffect(() => {
 
-        async function fetchServices(){
+        async function fetchClients(){
 
             const response =
 
                 await fetch(
 
-                    "http://localhost:3000/services"
+                    "http://localhost:3000/clients"
                 );
 
             const data =
                 await response.json();
 
-            setServices(data);
+            setClients(data);
 
         }
 
-        fetchServices();
+        fetchClients();
 
     }, []);
 
@@ -65,7 +65,7 @@ export default function Services(){
 
             <h1>
 
-                Services
+                Clients
 
             </h1>
 
@@ -75,25 +75,31 @@ export default function Services(){
 
                 {
 
-                    services.map((service) => (
+                    clients.map((client) => (
 
                         <div
 
                             className="service-card"
 
-                            key={service.numService}
+                            key={client.numClient}
 
                         >
 
                             <h2>
 
-                                {service.nomService}
+                                {client.nomClient}
+
+                                {" "}
+
+                                {client.prenomClient}
 
                             </h2>
 
+
+
                             <p>
 
-                                {service.description}
+                                {client.email}
 
                             </p>
 

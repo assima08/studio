@@ -1,0 +1,44 @@
+.services-page{
+
+    padding:40px;
+
+}
+
+
+
+.services-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:24px;
+
+}
+
+
+
+.service-card{
+
+    padding:24px;
+
+    border-radius:16px;
+
+    background:#111;
+
+    border:1px solid #333;
+
+    transition:0.3s;
+
+}
+
+
+
+.service-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:white;
+
+}

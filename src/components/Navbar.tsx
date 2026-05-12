@@ -12,17 +12,53 @@ import logo
 
 const navLinks = [
 
-    { label:"accueil", href:"/" },
+    {
 
-    { label:"services", href:"/services" },
+        label:"Accueil",
 
-    { label:"artistes", href:"/artistes" },
+        href:"/"
 
-    { label:"reservation", href:"/reservation" },
+    },
 
-    { label:"À propos", href:"/about" },
+    {
 
-    { label:"contact", href:"/contact" },
+        label:"Services",
+
+        href:"/services"
+
+    },
+
+    {
+
+        label:"Experts",
+
+        href:"/experts"
+
+    },
+
+    {
+
+        label:"Tarifs",
+
+        href:"/tarifs"
+
+    },
+
+    {
+
+        label:"Clients",
+
+        href:"/clients"
+
+    },
+
+    {
+
+        label:"Reservations",
+
+        href:"/reservations"
+
+    }
 
 ];
 
@@ -56,35 +92,31 @@ function Navbar(){
 
             {
 
-                navLinks.map(
+                navLinks.map((link) => (
 
-                    (link) => (
+                    <div
 
-                        <div
+                        className="menu-item"
 
-                            className="menu-item"
+                        key={link.href}
 
-                            key={link.href}
+                    >
+
+                        <Link
+
+                            className="nav-link"
+
+                            to={link.href}
 
                         >
 
-                            <Link
+                            {link.label}
 
-                                className="nav-link"
+                        </Link>
 
-                                to={link.href}
+                    </div>
 
-                            >
-
-                                {link.label}
-
-                            </Link>
-
-                        </div>
-
-                    )
-
-                )
+                ))
 
             }
 
