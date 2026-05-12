@@ -1,6 +1,9 @@
 import express
     from "express";
 
+import cors
+    from "cors";
+
 import serviceRoutes
     from "./routes/service.route.js";
 
@@ -13,9 +16,13 @@ import expertRoutes
 import reservationRoutes
     from "./routes/reservation.route.js";
 
+
+
 const app = express();
 
 
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -26,11 +33,22 @@ app.use(
     serviceRoutes
 );
 
-app.use("/tarifs", tarifRoutes);
+app.use(
+    "/tarifs",
+    tarifRoutes
+);
 
-app.use("/experts", expertRoutes);
+app.use(
+    "/experts",
+    expertRoutes
+);
 
-app.use("/reservations", reservationRoutes);
+app.use(
+    "/reservations",
+    reservationRoutes
+);
+
+
 
 app.listen(3000, () => {
 
