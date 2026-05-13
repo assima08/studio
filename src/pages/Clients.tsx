@@ -7,6 +7,8 @@ import {
 }
     from "react";
 
+import "./css/Services.css";
+
 
 
 interface Client{
@@ -35,6 +37,36 @@ export default function Clients(){
 
 
 
+    const [
+
+        nomClient,
+
+        setNomClient
+
+    ] = useState("");
+
+
+
+    const [
+
+        prenomClient,
+
+        setPrenomClient
+
+    ] = useState("");
+
+
+
+    const [
+
+        email,
+
+        setEmail
+
+    ] = useState("");
+
+
+
     useEffect(() => {
 
         async function fetchClients(){
@@ -59,6 +91,66 @@ export default function Clients(){
 
 
 
+    async function createClient(){
+
+        const response =
+
+            await fetch(
+
+                "http://localhost:3000/clients",
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        nomClient,
+
+                        prenomClient,
+
+                        email
+
+                    })
+
+                }
+
+            );
+
+
+
+        const newClient =
+            await response.json();
+
+
+
+        setClients([
+
+            ...clients,
+
+            newClient
+
+        ]);
+
+
+
+        setNomClient("");
+
+        setPrenomClient("");
+
+        setEmail("");
+
+    }
+
+
+
     return(
 
         <div className="services-page">
@@ -68,6 +160,66 @@ export default function Clients(){
                 Clients
 
             </h1>
+
+
+
+            <div className="service-card">
+
+                <input
+
+                    value={nomClient}
+
+                    onChange={(e) =>
+
+                        setNomClient(e.target.value)
+
+                    }
+
+                    placeholder="Nom"
+
+                />
+
+
+
+                <input
+
+                    value={prenomClient}
+
+                    onChange={(e) =>
+
+                        setPrenomClient(e.target.value)
+
+                    }
+
+                    placeholder="Prénom"
+
+                />
+
+
+
+                <input
+
+                    value={email}
+
+                    onChange={(e) =>
+
+                        setEmail(e.target.value)
+
+                    }
+
+                    placeholder="Email"
+
+                />
+
+
+
+                <button onClick={createClient}>
+
+                    Créer
+
+                </button>
+
+            </div>
 
 
 

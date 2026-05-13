@@ -35,6 +35,26 @@ export default function Services(){
 
 
 
+    const [
+
+        nomService,
+
+        setNomService
+
+    ] = useState("");
+
+
+
+    const [
+
+        description,
+
+        setDescription
+
+    ] = useState("");
+
+
+
     useEffect(() => {
 
         async function fetchServices(){
@@ -59,6 +79,62 @@ export default function Services(){
 
 
 
+    async function createService(){
+
+        const response =
+
+            await fetch(
+
+                "http://localhost:3000/services",
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        nomService,
+
+                        description
+
+                    })
+
+                }
+
+            );
+
+
+
+        const newService =
+            await response.json();
+
+
+
+        setServices([
+
+            ...services,
+
+            newService
+
+        ]);
+
+
+
+        setNomService("");
+
+        setDescription("");
+
+    }
+
+
+
     return(
 
         <div className="services-page">
@@ -68,6 +144,50 @@ export default function Services(){
                 Services
 
             </h1>
+
+
+
+            <div className="service-card">
+
+                <input
+
+                    value={nomService}
+
+                    onChange={(e) =>
+
+                        setNomService(e.target.value)
+
+                    }
+
+                    placeholder="Nom du service"
+
+                />
+
+
+
+                <input
+
+                    value={description}
+
+                    onChange={(e) =>
+
+                        setDescription(e.target.value)
+
+                    }
+
+                    placeholder="Description"
+
+                />
+
+
+
+                <button onClick={createService}>
+
+                    Créer
+
+                </button>
+
+            </div>
 
 
 
@@ -90,6 +210,8 @@ export default function Services(){
                                 {service.nomService}
 
                             </h2>
+
+
 
                             <p>
 

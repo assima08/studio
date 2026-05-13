@@ -5,9 +5,6 @@ import {
 }
     from "react-router-dom";
 
-import logo
-    from "../../public/zooneviilogo.png";
-
 
 
 const navLinks = [
@@ -46,17 +43,9 @@ const navLinks = [
 
     {
 
-        label:"Clients",
+        label:"Reservation",
 
-        href:"/clients"
-
-    },
-
-    {
-
-        label:"Reservations",
-
-        href:"/reservations"
+        href:"/reservation"
 
     }
 
@@ -76,7 +65,7 @@ function Navbar(){
 
                     className="logo"
 
-                    src={logo}
+                    src="/zooneviilogo.png"
 
                     alt="logo"
 

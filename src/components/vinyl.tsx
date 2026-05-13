@@ -1,9 +1,27 @@
-import vinylImage from "../../public/vinyl.png";
-function vinyl(){
-    return (
-        <section className="vinyl">
-            <img src={vinylImage} alt="Vinyl" width={10000}/>
-        </section>
+
+
+function Vinyl(){
+
+    return(
+
+        <div className="vinyl-container">
+
+            <img
+
+                src="/vinyl.png"
+
+                alt="vinyl"
+
+                className="vinyl-image"
+
+            />
+
+        </div>
+
     );
+
 }
-export  default vinyl;
+
+
+
+export default Vinyl;

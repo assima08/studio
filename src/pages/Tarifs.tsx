@@ -7,6 +7,8 @@ import {
 }
     from "react";
 
+import "./css/Services.css";
+
 
 
 interface Service{
@@ -47,6 +49,56 @@ export default function Tarifs(){
 
 
 
+    const [
+
+        nomTarif,
+
+        setNomTarif
+
+    ] = useState("");
+
+
+
+    const [
+
+        typeTarif,
+
+        setTypeTarif
+
+    ] = useState("");
+
+
+
+    const [
+
+        prixTarif,
+
+        setPrixTarif
+
+    ] = useState("");
+
+
+
+    const [
+
+        dureeTarif,
+
+        setDureeTarif
+
+    ] = useState("");
+
+
+
+    const [
+
+        numService,
+
+        setNumService
+
+    ] = useState("");
+
+
+
     useEffect(() => {
 
         async function fetchTarifs(){
@@ -71,6 +123,62 @@ export default function Tarifs(){
 
 
 
+    async function createTarif(){
+
+        const response =
+
+            await fetch(
+
+                "http://localhost:3000/tarifs",
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        nomTarif,
+
+                        typeTarif,
+
+                        prixTarif:Number(prixTarif),
+
+                        dureeTarif:Number(dureeTarif),
+
+                        numService:Number(numService)
+
+                    })
+
+                }
+
+            );
+
+
+
+        const newTarif =
+            await response.json();
+
+
+
+        setTarifs([
+
+            ...tarifs,
+
+            newTarif
+
+        ]);
+
+    }
+
+
+
     return(
 
         <div className="services-page">
@@ -80,6 +188,98 @@ export default function Tarifs(){
                 Tarifs
 
             </h1>
+
+
+
+            <div className="service-card">
+
+                <input
+
+                    value={nomTarif}
+
+                    onChange={(e) =>
+
+                        setNomTarif(e.target.value)
+
+                    }
+
+                    placeholder="Nom"
+
+                />
+
+
+
+                <input
+
+                    value={typeTarif}
+
+                    onChange={(e) =>
+
+                        setTypeTarif(e.target.value)
+
+                    }
+
+                    placeholder="Type"
+
+                />
+
+
+
+                <input
+
+                    value={prixTarif}
+
+                    onChange={(e) =>
+
+                        setPrixTarif(e.target.value)
+
+                    }
+
+                    placeholder="Prix"
+
+                />
+
+
+
+                <input
+
+                    value={dureeTarif}
+
+                    onChange={(e) =>
+
+                        setDureeTarif(e.target.value)
+
+                    }
+
+                    placeholder="Durée"
+
+                />
+
+
+
+                <input
+
+                    value={numService}
+
+                    onChange={(e) =>
+
+                        setNumService(e.target.value)
+
+                    }
+
+                    placeholder="ID Service"
+
+                />
+
+
+
+                <button onClick={createTarif}>
+
+                    Créer
+
+                </button>
+
+            </div>
 
 
 
@@ -107,7 +307,6 @@ export default function Tarifs(){
 
                             <p>
 
-                                Type :
                                 {tarif.typeTarif}
 
                             </p>
@@ -116,7 +315,6 @@ export default function Tarifs(){
 
                             <p>
 
-                                Prix :
                                 {tarif.prixTarif}$
 
                             </p>
@@ -125,7 +323,6 @@ export default function Tarifs(){
 
                             <p>
 
-                                Durée :
                                 {tarif.dureeTarif} min
 
                             </p>
@@ -134,7 +331,6 @@ export default function Tarifs(){
 
                             <p>
 
-                                Service :
                                 {tarif.service.nomService}
 
                             </p>

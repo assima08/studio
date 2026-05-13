@@ -7,6 +7,8 @@ import {
 }
     from "react";
 
+import "./css/Services.css";
+
 
 
 interface ExpertService{
@@ -51,6 +53,46 @@ export default function Experts(){
 
 
 
+    const [
+
+        nomExpert,
+
+        setNomExpert
+
+    ] = useState("");
+
+
+
+    const [
+
+        emailExpert,
+
+        setEmailExpert
+
+    ] = useState("");
+
+
+
+    const [
+
+        telephoneExpert,
+
+        setTelephoneExpert
+
+    ] = useState("");
+
+
+
+    const [
+
+        numService,
+
+        setNumService
+
+    ] = useState("");
+
+
+
     useEffect(() => {
 
         async function fetchExperts(){
@@ -75,6 +117,60 @@ export default function Experts(){
 
 
 
+    async function createExpert(){
+
+        const response =
+
+            await fetch(
+
+                "http://localhost:3000/experts",
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        nomExpert,
+
+                        emailExpert,
+
+                        telephoneExpert,
+
+                        numService:Number(numService)
+
+                    })
+
+                }
+
+            );
+
+
+
+        const newExpert =
+            await response.json();
+
+
+
+        setExperts([
+
+            ...experts,
+
+            newExpert
+
+        ]);
+
+    }
+
+
+
     return(
 
         <div className="services-page">
@@ -84,6 +180,82 @@ export default function Experts(){
                 Experts
 
             </h1>
+
+
+
+            <div className="service-card">
+
+                <input
+
+                    value={nomExpert}
+
+                    onChange={(e) =>
+
+                        setNomExpert(e.target.value)
+
+                    }
+
+                    placeholder="Nom"
+
+                />
+
+
+
+                <input
+
+                    value={emailExpert}
+
+                    onChange={(e) =>
+
+                        setEmailExpert(e.target.value)
+
+                    }
+
+                    placeholder="Email"
+
+                />
+
+
+
+                <input
+
+                    value={telephoneExpert}
+
+                    onChange={(e) =>
+
+                        setTelephoneExpert(e.target.value)
+
+                    }
+
+                    placeholder="Téléphone"
+
+                />
+
+
+
+                <input
+
+                    value={numService}
+
+                    onChange={(e) =>
+
+                        setNumService(e.target.value)
+
+                    }
+
+                    placeholder="ID Service"
+
+                />
+
+
+
+                <button onClick={createExpert}>
+
+                    Créer
+
+                </button>
+
+            </div>
 
 
 
@@ -122,34 +294,6 @@ export default function Experts(){
                                 {expert.telephoneExpert}
 
                             </p>
-
-
-
-                            {
-
-                                expert.services.map(
-
-                                    (relation,index) => (
-
-                                        <p key={index}>
-
-                                            {
-
-                                                relation
-
-                                                    .service
-
-                                                    .nomService
-
-                                            }
-
-                                        </p>
-
-                                    )
-
-                                )
-
-                            }
 
                         </div>
 

@@ -7,187 +7,430 @@ import {
 }
     from "react";
 
+import "./css/Reservation.css";
 
 
-interface Reservation{
 
-    numReservation:number;
+interface Tarif{
 
-    dateReservation:string;
+    numTarif:number;
 
-    statutReservation:string;
+    nomTarif:string;
 
-    client:{
+    prixTarif:number;
 
-        nomClient:string;
+    service:{
 
-        prenomClient:string;
+        nomService:string;
 
-    };
-
-    tarif:{
-
-        nomTarif:string;
-
-        service:{
-
-            nomService:string;
-
-        };
-
-    };
+    }
 
 }
 
 
 
-export default function Reservations(){
+export default function Reservation(){
 
     const [
 
-        reservations,
+        nomClient,
 
-        setReservations
+        setNomClient
 
-    ] = useState<Reservation[]>([]);
+    ] = useState("");
+
+
+
+    const [
+
+        prenomClient,
+
+        setPrenomClient
+
+    ] = useState("");
+
+
+
+    const [
+
+        email,
+
+        setEmail
+
+    ] = useState("");
+
+
+
+    const [
+
+        dateReservation,
+
+        setDateReservation
+
+    ] = useState("");
+
+
+
+    const [
+
+        heureReservation,
+
+        setHeureReservation
+
+    ] = useState("");
+
+
+
+    const [
+
+        numTarif,
+
+        setNumTarif
+
+    ] = useState("");
+
+
+
+    const [
+
+        tarifs,
+
+        setTarifs
+
+    ] = useState<Tarif[]>([]);
 
 
 
     useEffect(() => {
 
-        async function fetchReservations(){
+        async function fetchTarifs(){
 
             const response =
 
                 await fetch(
 
-                    "http://localhost:3000/reservations"
+                    "http://localhost:3000/tarifs"
                 );
 
             const data =
                 await response.json();
 
-            setReservations(data);
+            setTarifs(data);
 
         }
 
-        fetchReservations();
+
+
+        fetchTarifs();
 
     }, []);
 
 
 
-    return(
+    async function createReservation(){
 
-        <div className="services-page">
+        const dateComplete =
 
-            <h1>
+            new Date(
 
-                Reservations
-
-            </h1>
-
+                `${dateReservation}T${heureReservation}`
+            );
 
 
-            <div className="services-grid">
+
+        const response =
+
+            await fetch(
+
+                "http://localhost:3000/reservations",
 
                 {
 
-                    reservations.map((reservation) => (
+                    method:"POST",
 
-                        <div
+                    headers:{
 
-                            className="service-card"
+                        "Content-Type":
+                            "application/json"
 
-                            key={reservation.numReservation}
+                    },
 
-                        >
+                    body:JSON.stringify({
 
-                            <h2>
+                        nomClient,
 
-                                {
+                        prenomClient,
 
-                                    reservation.client.nomClient
+                        email,
 
-                                }
+                        dateReservation:dateComplete,
 
-                                {" "}
+                        statutReservation:"En attente",
 
-                                {
+                        numTarif:Number(numTarif)
 
-                                    reservation.client.prenomClient
-
-                                }
-
-                            </h2>
-
-
-
-                            <p>
-
-                                {
-
-                                    reservation.tarif.nomTarif
-
-                                }
-
-                            </p>
-
-
-
-                            <p>
-
-                                {
-
-                                    reservation
-
-                                        .tarif
-
-                                        .service
-
-                                        .nomService
-
-                                }
-
-                            </p>
-
-
-
-                            <p>
-
-                                {
-
-                                    reservation
-
-                                        .statutReservation
-
-                                }
-
-                            </p>
-
-
-
-                            <p>
-
-                                {
-
-                                    new Date(
-
-                                        reservation
-
-                                            .dateReservation
-
-                                    ).toLocaleDateString()
-
-                                }
-
-                            </p>
-
-                        </div>
-
-                    ))
+                    })
 
                 }
+
+            );
+
+
+
+        const data =
+            await response.json();
+
+
+
+        console.log(data);
+
+
+
+        alert(
+
+            "Réservation envoyée"
+
+        );
+
+
+
+        setNomClient("");
+
+        setPrenomClient("");
+
+        setEmail("");
+
+        setDateReservation("");
+
+        setHeureReservation("");
+
+        setNumTarif("");
+
+    }
+
+
+
+    return(
+
+        <div className="reservation-page">
+
+            <div className="reservation-container">
+
+                <h1>
+
+                    Réserver une session
+
+                </h1>
+
+
+
+                <div className="reservation-form">
+
+                    <input
+
+                        value={nomClient}
+
+                        onChange={(e) =>
+
+                            setNomClient(e.target.value)
+
+                        }
+
+                        placeholder="Nom"
+
+                    />
+
+
+
+                    <input
+
+                        value={prenomClient}
+
+                        onChange={(e) =>
+
+                            setPrenomClient(e.target.value)
+
+                        }
+
+                        placeholder="Prénom"
+
+                    />
+
+
+
+                    <input
+
+                        value={email}
+
+                        onChange={(e) =>
+
+                            setEmail(e.target.value)
+
+                        }
+
+                        placeholder="Email"
+
+                        type="email"
+
+                    />
+
+
+
+                    <select
+
+                        value={numTarif}
+
+                        onChange={(e) =>
+
+                            setNumTarif(e.target.value)
+
+                        }
+
+                    >
+
+                        <option value="">
+
+                            Choisir un service
+
+                        </option>
+
+
+
+                        {
+
+                            tarifs.map((tarif) => (
+
+                                <option
+
+                                    key={tarif.numTarif}
+
+                                    value={tarif.numTarif}
+
+                                >
+
+                                    {
+
+                                        tarif.service.nomService
+
+                                    }
+
+                                    {" - "}
+
+                                    {
+
+                                        tarif.nomTarif
+
+                                    }
+
+                                    {" - "}
+
+                                    {
+
+                                        tarif.prixTarif
+
+                                    }
+
+                                    $
+
+                                </option>
+
+                            ))
+
+                        }
+
+                    </select>
+
+
+
+                    <input
+
+                        type="date"
+
+                        value={dateReservation}
+
+                        onChange={(e) =>
+
+                            setDateReservation(e.target.value)
+
+                        }
+
+                    />
+
+
+
+                    <select
+
+                        value={heureReservation}
+
+                        onChange={(e) =>
+
+                            setHeureReservation(e.target.value)
+
+                        }
+
+                    >
+
+                        <option value="">
+
+                            Choisir une heure
+
+                        </option>
+
+
+
+                        <option value="09:00">
+
+                            09:00
+
+                        </option>
+
+
+
+                        <option value="11:00">
+
+                            11:00
+
+                        </option>
+
+
+
+                        <option value="13:00">
+
+                            13:00
+
+                        </option>
+
+
+
+                        <option value="15:00">
+
+                            15:00
+
+                        </option>
+
+
+
+                        <option value="17:00">
+
+                            17:00
+
+                        </option>
+
+                    </select>
+
+
+
+                    <button
+
+                        onClick={createReservation}
+
+                    >
+
+                        Réserver
+
+                    </button>
+
+                </div>
 
             </div>
 

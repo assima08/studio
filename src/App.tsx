@@ -103,6 +103,16 @@ function App(){
 
                 />
 
+
+
+                <Route
+
+                    path="/reservation"
+
+                    element={<Reservations />}
+
+                />
+
             </Routes>
 
 

@@ -1,17 +1,27 @@
-function waveform (){
-    return(
-        <div className="waveform">
 
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+
+function Waveform(){
+
+    return(
+
+        <div className="waveform-container">
+
+            <img
+
+                src="/bgstudio2.png"
+
+                alt="studio"
+
+                className="waveform-image"
+
+            />
 
         </div>
+
     );
+
 }
-export default waveform;
+
+
+
+export default Waveform;
